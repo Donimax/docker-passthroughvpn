@@ -1,6 +1,6 @@
 # VPN Passthrough Container with support for WireGuard and OpenVPN
-[![Docker Pulls](https://img.shields.io/docker/pulls/dyonr/passthroughvpn)](https://hub.docker.com/r/dyonr/passthroughvpn)
-[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/dyonr/passthroughvpn/latest)](https://hub.docker.com/r/dyonr/passthroughvpn)
+[![Docker Pulls](https://img.shields.io/docker/pulls/donimax/passthroughvpn)](https://hub.docker.com/r/donimax/passthroughvpn)
+[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/donimax/passthroughvpn/latest)](https://hub.docker.com/r/donimax/passthroughvpn)
 
 Docker container which runs Debian Bullseye with a WireGuard or OpenVPN with iptables killswitch to prevent IP leakage when the tunnel goes down.
 This Docker runs nothing but Debian Bullseye with a VPN connection, but it's intended use is to route other containers with no VPN or proxy capability through this one to protect you IP.  
@@ -56,7 +56,7 @@ This port is [exposed by the Docker container](https://docs.docker.com/engine/re
 **Description**: Web interface for jDownloader2.  
 9. **Note how I set the container port to 8080 (the exposed port) but the host port to 8012.** This means I would need to access the web interface on 192.168.0.100:8012 instead of 192.168.0.100:8080 how it used to be. You can set the Host Port to 8080 also.  
 10. Repeat step 8. for all desired ports, for example if there are multiple ports / web interfaces needed.  
-11. Look for the `ADDITIONAL_PORTS` environment variable, add as example the following:  
+11. Look for the `ADDITIONAL_PORTS_TCP` environment variable, add as example the following:  
 `8012,8080`  
 This are all container ports and host ports you have added in step 8.  
 12. Apply the changes to the _passthroughvpn container_.  
@@ -108,7 +108,7 @@ In these instructions, I do assume you have common sense, experience with Unraid
 **Description**: Web interface for Game Server.  
 9. **Note how I set the container port to 8443 (the exposed port) but the host port to 8012.** This means I would need to access the service on 192.168.0.100:8012 instead of 192.168.0.100:8443.  
 10. Repeat step 8. for all desired ports (I would make a container port 25569 with host port 25570).  
-11. Look for the `ADDITIONAL_PORTS` environment variable, add as example the following:  
+11. Look for the `ADDITIONAL_PORTS_TCP` environment variable, add as example the following:  
 `8012,8443,25569,25570`  
 This are all container ports and host ports you have added in step 8.  
 12. Apply the changes to the _passthroughvpn container_.  
@@ -157,7 +157,8 @@ wget -q https://raw.githubusercontent.com/DyonR/docker-passthroughvpn/master/res
 |`VPN_USERNAME`| No | If username and password provided, configures ovpn file automatically |`VPN_USERNAME=ad8f64c02a2de`||
 |`VPN_PASSWORD`| No | If username and password provided, configures ovpn file automatically |`VPN_PASSWORD=ac98df79ed7fb`||
 |`LAN_NETWORK`| Yes (atleast one) | Comma delimited local Network's with CIDR notation |`LAN_NETWORK=192.168.0.0/24,10.10.0.0/24`||
-|`ADDITIONAL_PORTS`| No | Adding a comma delimited list of ports will allow these ports via the iptables script. |`ADDITIONAL_PORTS=1234,8112`||
+|`ADDITIONAL_PORTS_TCP`| No | Adding a comma delimited list of tcp ports will allow these ports via the iptables script. |`ADDITIONAL_PORTS_TCP=1234,8112`||
+|`ADDITIONAL_PORTS_UDP`| No | Adding a comma delimited list of udp ports will allow these ports via the iptables script. |`ADDITIONAL_PORTS_UDP=1234,8112`||
 |`RESTART_CONTAINER`| No | If set to `yes`, the container will `exit 1`, restarting itself. |`RESTART_CONTAINER=yes`||
 |`NAME_SERVERS`| No | Comma delimited name servers |`NAME_SERVERS=1.1.1.1,1.0.0.1`|`1.1.1.1,1.0.0.1`|
 |`PUID`| No | UID for the user that runs the container |`PUID=99`|`99`|
@@ -188,3 +189,4 @@ If possible, always use the most up to date version of Docker, you operating sys
 [MarkusMcNugen/docker-qBittorrentvpn](https://github.com/MarkusMcNugen/docker-qBittorrentvpn)  
 [DyonR/jackettvpn](https://github.com/DyonR/jackettvpn)  
 This projects originates from MarkusMcNugen/docker-qBittorrentvpn, but forking was not possible since DyonR/jackettvpn uses the fork already.
+[DyonR/docker-passthroughvpn](https://github.com/DyonR/docker-passthroughvpn)

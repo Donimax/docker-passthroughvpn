@@ -99,12 +99,13 @@ iptables -A INPUT -s "${docker_network_cidr}" -d "${docker_network_cidr}" -j ACC
 iptables -A INPUT -i "${docker_interface}" -p $VPN_PROTOCOL --sport $VPN_PORT -j ACCEPT
 
 # additional port list for scripts or container linking
-if [[ ! -z "${ADDITIONAL_PORTS}" ]]; then
-	# split comma separated string into list from ADDITIONAL_PORTS env variable
-	IFS=',' read -ra additional_port_list <<< "${ADDITIONAL_PORTS}"
+#TCP
+if [[ ! -z "${ADDITIONAL_PORTS_TCP}" ]]; then
+	# split comma separated string into list from ADDITIONAL_PORTS_TCP env variable
+	IFS=',' read -ra additional_port_list_tcp <<< "${ADDITIONAL_PORTS_TCP}"
 
 	# process additional ports in the list
-	for additional_port_item in "${additional_port_list[@]}"; do
+	for additional_port_item in "${additional_port_list_tcp[@]}"; do
 
 		# strip whitespace from start and end of additional_port_item
 		additional_port_item=$(echo "${additional_port_item}" | sed -e 's~^[ \t]*~~;s~[ \t]*$~~')
@@ -114,6 +115,24 @@ if [[ ! -z "${ADDITIONAL_PORTS}" ]]; then
 		# accept input to additional port for "${docker_interface}"
 		iptables -A INPUT -i "${docker_interface}" -p tcp --dport "${additional_port_item}" -j ACCEPT
 		iptables -A INPUT -i "${docker_interface}" -p tcp --sport "${additional_port_item}" -j ACCEPT
+	done
+fi
+# UDP
+if [[ ! -z "${ADDITIONAL_PORTS_UDP}" ]]; then
+	# split comma separated string into list from ADDITIONAL_PORTS_UDP env variable
+	IFS=',' read -ra additional_port_list_udp <<< "${ADDITIONAL_PORTS_UDP}"
+
+	# process additional ports in the list
+	for additional_port_item in "${additional_port_list_udp[@]}"; do
+
+		# strip whitespace from start and end of additional_port_item
+		additional_port_item=$(echo "${additional_port_item}" | sed -e 's~^[ \t]*~~;s~[ \t]*$~~')
+
+		echo "[INFO] Adding additional incoming port ${additional_port_item} for ${docker_interface}" | ts '%Y-%m-%d %H:%M:%.S'
+
+		# accept input to additional port for "${docker_interface}"
+		iptables -A INPUT -i "${docker_interface}" -p udp --dport "${additional_port_item}" -j ACCEPT
+		iptables -A INPUT -i "${docker_interface}" -p udp --sport "${additional_port_item}" -j ACCEPT
 	done
 fi
 
@@ -142,12 +161,13 @@ iptables -A OUTPUT -s "${docker_network_cidr}" -d "${docker_network_cidr}" -j AC
 iptables -A OUTPUT -o "${docker_interface}" -p $VPN_PROTOCOL --dport $VPN_PORT -j ACCEPT
 
 # additional port list for scripts or container linking
-if [[ ! -z "${ADDITIONAL_PORTS}" ]]; then
-	# split comma separated string into list from ADDITIONAL_PORTS env variable
-	IFS=',' read -ra additional_port_list <<< "${ADDITIONAL_PORTS}"
+#TCP
+if [[ ! -z "${ADDITIONAL_PORTS_TCP}" ]]; then
+	# split comma separated string into list from ADDITIONAL_PORTS_TCP env variable
+	IFS=',' read -ra additional_port_list_tcp <<< "${ADDITIONAL_PORTS_TCP}"
 
 	# process additional ports in the list
-	for additional_port_item in "${additional_port_list[@]}"; do
+	for additional_port_item in "${additional_port_list_tcp[@]}"; do
 
 		# strip whitespace from start and end of additional_port_item
 		additional_port_item=$(echo "${additional_port_item}" | sed -e 's~^[ \t]*~~;s~[ \t]*$~~')
@@ -157,6 +177,25 @@ if [[ ! -z "${ADDITIONAL_PORTS}" ]]; then
 		# accept output to additional port for lan interface
 		iptables -A OUTPUT -o "${docker_interface}" -p tcp --dport "${additional_port_item}" -j ACCEPT
 		iptables -A OUTPUT -o "${docker_interface}" -p tcp --sport "${additional_port_item}" -j ACCEPT
+
+	done
+fi
+#UDP
+if [[ ! -z "${ADDITIONAL_PORTS_UDP}" ]]; then
+	# split comma separated string into list from ADDITIONAL_PORTS_UDP env variable
+	IFS=',' read -ra additional_port_list_udp <<< "${ADDITIONAL_PORTS_UDP}"
+
+	# process additional ports in the list
+	for additional_port_item in "${additional_port_list_udp[@]}"; do
+
+		# strip whitespace from start and end of additional_port_item
+		additional_port_item=$(echo "${additional_port_item}" | sed -e 's~^[ \t]*~~;s~[ \t]*$~~')
+
+		echo "[INFO] Adding additional outgoing port ${additional_port_item} for ${docker_interface}" | ts '%Y-%m-%d %H:%M:%.S'
+
+		# accept output to additional port for lan interface
+		iptables -A OUTPUT -o "${docker_interface}" -p udp --dport "${additional_port_item}" -j ACCEPT
+		iptables -A OUTPUT -o "${docker_interface}" -p udp --sport "${additional_port_item}" -j ACCEPT
 
 	done
 fi
