@@ -1,6 +1,6 @@
 # VPN Passthrough Container with support for WireGuard and OpenVPN
-[![Docker Pulls](https://img.shields.io/docker/pulls/donimax/passthroughvpn)](https://hub.docker.com/r/donimax/passthroughvpn)
-[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/donimax/passthroughvpn/latest)](https://hub.docker.com/r/donimax/passthroughvpn)
+[![Docker Pulls](https://img.shields.io/docker/pulls/donimax/docker-passthroughvpn)](https://hub.docker.com/r/donimax/docker-passthroughvpn)
+[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/donimax/docker-passthroughvpn/latest)](https://hub.docker.com/r/donimax/docker-passthroughvpn)
 
 Docker container which runs Debian Bullseye with a WireGuard or OpenVPN with iptables killswitch to prevent IP leakage when the tunnel goes down.
 This Docker runs nothing but Debian Bullseye with a VPN connection, but it's intended use is to route other containers with no VPN or proxy capability through this one to protect you IP.  
