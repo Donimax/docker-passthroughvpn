@@ -115,10 +115,10 @@ In these instructions, I do assume you have common sense, experience with Unraid
 6. Open the 'Edit' page of the **_passthroughvpn container_**.
 7. In the top right change the slider from `Basic View` to `Advanced View`.
 8. Select the `Add another Path, Port, Variable, Label or Device` completely at the bottom and follow the example below:
-**Config Type**: `Port`
-**Name**: `Game Server Web interface`
-**Container Port**: `8443`
-**Host Port**: `8012`
+**Config Type**: `Port`  
+**Name**: `Game Server Web interface`  
+**Container Port**: `8443`  
+**Host Port**: `8012`  
 **Description**: Web interface for Game Server.
 1. **Note how I set the container port to 8443 (the exposed port) but the host port to 8012.** This means I would need to access the service on 192.168.0.100:8012 instead of 192.168.0.100:8443.
 2. Repeat step 8. for all desired ports (I would make a container port 25569 with host port 25570).
@@ -136,11 +136,11 @@ Since I have no other reference material, in this example I will explain how I d
 1. Go to your account and then the port forwarding section.
 2. Add a new portforward (for Windscribe, the green circular + icon)
 3. Enter the correct info. Example:
-**Service Name**: Game Server Web interface
-**TCP+UDP**: TCP Only
-**Device**: New Manual Device -> **Device Name**: Game Server
-**External Port**: 5080
-**Internal Port**: 8012
+**Service Name**: Game Server Web interface  
+**TCP+UDP**: TCP Only  
+**Device**: New Manual Device -> **Device Name**: Game Server  
+**External Port**: 5080  
+**Internal Port**: 8012  
 4. Download the OpenVPN config and securely store the username and password somewhere.
 5. Repeat step 2-3 for all desired ports. (My game server will have External port 50815
 6. Open the 'Edit' page of the **_passthroughvpn container_**.
