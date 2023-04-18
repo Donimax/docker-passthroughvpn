@@ -37,7 +37,7 @@ This port is [exposed by the Docker container](https://docs.docker.com/engine/re
 
 #### Installing the passthroughvpn container  
 1. At the `Apps` section of Unraid search for `passthroughvpn`, you will see an app matching this name from my repository (Dyon's Repository).  
-2. Configure the container to your liking, please refer to the [**Environment Variables**](https://github.com/DyonR/docker-passthroughvpn#environment-variables) section below. Do not forget to correct the **LAN_NETWORK** variable.  
+2. Configure the container to your liking, please refer to the [**Environment Variables**](https://github.com/donimax/docker-passthroughvpn#environment-variables) section below. Do not forget to correct the **LAN_NETWORK** variable.  
 3. The container will not yet successfully start, since there is no OpenVPN or WireGuard config added yet. This will be done in a later step. For now it will be stuck in a reboot loop.
   
 #### Configuring the containers
@@ -89,7 +89,7 @@ In these instructions, I do assume you have common sense, experience with Unraid
 
 #### Installing the passthroughvpn container  
 1. At the `Apps` section of Unraid search for `passthroughvpn`, you will see an app matching this name from my repository (Dyon's Repository).  
-2. Configure the container to your liking, please refer to the [**Environment Variables**](https://github.com/DyonR/docker-passthroughvpn#environment-variables) section below. Do not forget to correct the **LAN_NETWORK** variable.  
+2. Configure the container to your liking, please refer to the [**Environment Variables**](https://github.com/donimax/docker-passthroughvpn#environment-variables) section below. Do not forget to correct the **LAN_NETWORK** variable.  
 3. The container will not yet successfully start, since there is no OpenVPN config added yet. This will be done in a later step. For now it will be stuck in a reboot loop.
   
 #### Configuring the containers
@@ -141,7 +141,7 @@ Since I have no other reference material, in this example I will explain how I d
 ```
 mkdir -p /boot/config/plugins/user.scripts/scripts/passthrough_restart
 echo 'This script will check if the passthroughvpn container has restarted and restart the passed through containers' > /boot/config/plugins/user.scripts/scripts/passthrough_restart/description
-wget -q https://raw.githubusercontent.com/DyonR/docker-passthroughvpn/master/restart-passed-through-containers.sh -O /boot/config/plugins/user.scripts/scripts/passthrough_restart/script
+wget -q https://raw.githubusercontent.com/donimax/docker-passthroughvpn/master/restart-passed-through-containers.sh -O /boot/config/plugins/user.scripts/scripts/passthrough_restart/script
 ```
 3. In Unraid, go to Settings -> (User Utilities at the bottom) -> User Scripts
 4. Here you will see a script called 'passthrough_restart'. Set the schedule to At Startup of Array. And press Apply.
